@@ -59,7 +59,6 @@ getInstruction(
   (error) => console.log(error)
 );
 // Iteration 2 - using promises
-// Iteration 2 - using promises
 obtainInstruction('steak', 0)
   .then((step0) => {
     document.querySelector('#steak').innerHTML += `<li>${step0}</li>`;
@@ -136,4 +135,23 @@ async function makeBroccoli() {
 makeBroccoli();
 
 // Bonus 2 - Promise all
-// ...
+const withPromiseAll = () => {
+  const allPromises = [];
+  brusselsSprouts.forEach((instruction, directionIndex) => {
+    allPromises.push(obtainInstruction('brusselsSprouts', directionIndex));
+  });
+  console.log(allPromises);
+
+  Promise.all(allPromises)
+    .then((arrayOfFulfilledValues) => {
+      arrayOfFulfilledValues.map((x) => {
+        document.querySelector('#brusselsSprouts').innerHTML += `<li>${x}</li>`;
+      });
+    })
+    .catch((error) => console.log(error))
+    .finally(() => {
+      document.querySelector('#brusselsSproutsImg').removeAttribute('hidden');
+    });
+};
+
+withPromiseAll();
